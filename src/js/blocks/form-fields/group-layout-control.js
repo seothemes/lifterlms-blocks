@@ -41,7 +41,7 @@ function onChange( { fieldLayout, setAttributes, innerBlocks } ) {
 	} );
 }
 
-export default function ( props ) {
+export default function( props ) {
 	const { attributes, block, setAttributes } = props,
 		{ fieldLayout } = attributes,
 		{ innerBlocks } = block;
@@ -50,8 +50,12 @@ export default function ( props ) {
 		<RadioControl
 			label={ __( 'Field Layout', 'lifterlms' ) }
 			selected={ fieldLayout }
-			onChange={ ( fieldLayout ) =>
-				onChange( { fieldLayout, setAttributes, innerBlocks } )
+			onChange={ ( value ) =>
+				onChange( {
+					fieldLayout: value,
+					setAttributes,
+					innerBlocks,
+				} )
 			}
 			options={ [
 				{ value: 'columns', label: __( 'Columns', 'lifterlms' ) },

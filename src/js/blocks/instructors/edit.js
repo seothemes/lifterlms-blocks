@@ -66,9 +66,8 @@ class InstructorsEdit extends Component {
  */
 export default compose( [
 	withSelect( ( select ) => {
-		const { getEditedPostAttribute, getCurrentPostId } = select(
-			'core/editor'
-		);
+		const { getEditedPostAttribute, getCurrentPostId } =
+			select( 'core/editor' );
 		return {
 			post_id: getCurrentPostId(),
 			instructors: getEditedPostAttribute( 'instructors' ),

@@ -102,21 +102,14 @@ function ListItem( {
 				/>
 				{ showKeys && (
 					<div className="llms-field-opt-db-key">
-						<Tooltip
-							text={ __( 'Database key value', 'lifterlms' ) }
-						>
+						<Tooltip text={ __( 'Database key value', 'lifterlms' ) }>
 							<Dashicon icon="database" />
 						</Tooltip>
 						<TextControl
 							className="llms-field-opt-text "
 							value={ item.key }
-							onChange={ ( key ) =>
-								updateItem( id, { ...item, key } )
-							}
-							placeholder={ __(
-								'Database key value',
-								'lifterlms'
-							) }
+							onChange={ ( key ) => updateItem( id, { ...item, key } ) }
+							placeholder={ __( 'Database key value', 'lifterlms' ) }
 						/>
 					</div>
 				) }
@@ -307,9 +300,7 @@ export default class InspectorFieldOptions extends Component {
 
 		// If the deleting option was the default force default back to the first item in the list.
 		if ( 'checkbox' !== field ) {
-			const deletingOption = options.find(
-				( { id } ) => id === deleteId
-			);
+			const deletingOption = options.find( ( { id } ) => id === deleteId );
 			newDefault = 'yes' === deletingOption.default;
 		}
 
@@ -360,9 +351,7 @@ export default class InspectorFieldOptions extends Component {
 
 					<Button
 						isTertiary
-						onClick={ () =>
-							this.setState( { showKeys: ! showKeys } )
-						}
+						onClick={ () => this.setState( { showKeys: ! showKeys } ) }
 					>
 						{ showKeys
 							? __( 'Hide keys', 'lifterlms' )

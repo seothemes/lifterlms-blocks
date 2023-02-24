@@ -34,9 +34,8 @@ import { getBlocksFlat } from '../../util/';
  * @return {void}
  */
 function hideCoreUI() {
-	const { _llms_form_is_core } = select( editorStore ).getEditedPostAttribute(
-		'meta'
-	);
+	const { _llms_form_is_core } =
+		select( editorStore ).getEditedPostAttribute( 'meta' );
 
 	// Hide Status & Visibility.
 	const selectors = [
@@ -45,9 +44,7 @@ function hideCoreUI() {
 
 	// Core forms cannot be drafted.
 	if ( 'yes' === _llms_form_is_core ) {
-		selectors.push(
-			'.edit-post-layout button.editor-post-switch-to-draft'
-		);
+		selectors.push( '.edit-post-layout button.editor-post-switch-to-draft' );
 	}
 
 	subscribe( () => {
@@ -68,9 +65,8 @@ function hideCoreUI() {
  * @return {void}
  */
 function maybeDisableVisibility() {
-	const { _llms_form_location } = select(
-		editorStore
-	).getEditedPostAttribute( 'meta' );
+	const { _llms_form_location } =
+		select( editorStore ).getEditedPostAttribute( 'meta' );
 
 	if ( [ 'registration', 'account' ].includes( _llms_form_location ) ) {
 		addFilter(

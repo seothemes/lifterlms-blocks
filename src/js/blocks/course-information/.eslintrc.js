@@ -1,5 +1,11 @@
 module.exports = {
 	rules: {
-		camelcase: [ 'error', { allow: [ 'show_*', 'title_size' ] } ],
+		camelcase: [ 'error', {
+			allow: [
+				'show_*',
+				'title_size',
+				'UNSAFE_*',
+			]
+		} ],
 	},
 };

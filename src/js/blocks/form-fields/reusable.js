@@ -39,9 +39,7 @@ if ( 'wp_block' === getCurrentPostType() ) {
 
 		lastContent = content;
 
-		const val = content.includes( '<!-- wp:llms/form-field' )
-			? 'yes'
-			: 'no';
+		const val = content.includes( '<!-- wp:llms/form-field' ) ? 'yes' : 'no';
 
 		dispatch( 'core/editor' ).editPost( {
 			is_llms_field: val,
@@ -90,13 +88,10 @@ addFilter(
 		const { ref } = attributes;
 
 		// Wait for block resolution.
-		const hasResolvedBlock = select(
-			'core'
-		).hasFinishedResolution( 'getEntityRecord', [
-			'postType',
-			'wp_block',
-			ref,
-		] );
+		const hasResolvedBlock = select( 'core' ).hasFinishedResolution(
+			'getEntityRecord',
+			[ 'postType', 'wp_block', ref ]
+		);
 
 		if ( hasResolvedBlock ) {
 			// Get field blocks from the block.

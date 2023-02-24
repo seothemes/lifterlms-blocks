@@ -17,13 +17,13 @@ import { fieldsObjectToArray, fieldsArrayToObject } from './util';
  *
  * @since 2.0.0
  *
- * @param {Object} fields Current fields object derived from the state tree.
- * @param {Object} field  Field to add.
+ * @param {Object} fieldsToAdd Current fields object derived from the state tree.
+ * @param {Object} field       Field to add.
  * @return {Object} Updated fields object.
  */
-function addField( fields, field ) {
+function addField( fieldsToAdd, field ) {
 	return {
-		...fields,
+		...fieldsToAdd,
 		[ field.name ]: {
 			...field,
 		},
@@ -37,15 +37,15 @@ function addField( fields, field ) {
  *
  * @since 2.0.0
  *
- * @param {Object} fields       Current fields object derived from the state tree.
- * @param {string} nameToDelete Name of the field to delete.
+ * @param {Object} fieldsToDelete Current fields object derived from the state tree.
+ * @param {string} nameToDelete   Name of the field to delete.
  * @return {Object} Updated fields object.
  */
-function deleteField( fields, nameToDelete ) {
-	fields = fieldsObjectToArray( fields ).filter(
+function deleteField( fieldsToDelete, nameToDelete ) {
+	fieldsToDelete = fieldsObjectToArray( fieldsToDelete ).filter(
 		( { name } ) => name !== nameToDelete
 	);
-	return fieldsArrayToObject( fields );
+	return fieldsArrayToObject( fieldsToDelete );
 }
 
 /**
@@ -55,16 +55,16 @@ function deleteField( fields, nameToDelete ) {
  *
  * @since 2.0.0
  *
- * @param {Object} fields Current fields object derived from the state tree.
- * @param {string} name   Name of the field to be edited.
- * @param {Object} edits  Full or partial object of edits to make to the field.
+ * @param {Object} fieldsToEdit Current fields object derived from the state tree.
+ * @param {string} name         Name of the field to be edited.
+ * @param {Object} edits        Full or partial object of edits to make to the field.
  * @return {Object} Updated fields object.
  */
-function editField( fields, name, edits ) {
+function editField( fieldsToEdit, name, edits ) {
 	return {
-		...fields,
+		...fieldsToEdit,
 		[ name ]: {
-			...fields[ name ],
+			...fieldsToEdit[ name ],
 			...edits,
 		},
 	};
@@ -75,17 +75,17 @@ function editField( fields, name, edits ) {
  *
  * @since 2.0.0
  *
- * @param {Object} fields  Current fields object derived from the state tree.
- * @param {string} oldName Current/old name of the field.
- * @param {string} newName New name of the field.
+ * @param {Object} fieldsToRename Current fields object derived from the state tree.
+ * @param {string} oldName        Current/old name of the field.
+ * @param {string} newName        New name of the field.
  * @return {Object} Updated fields object.
  */
-function renameField( fields, oldName, newName ) {
+function renameField( fieldsToRename, oldName, newName ) {
 	const copy = {
-		...fields[ oldName ],
+		...fieldsToRename[ oldName ],
 	};
-	fields = deleteField( fields, oldName );
-	return addField( fields, {
+	fieldsToRename = deleteField( fieldsToRename, oldName );
+	return addField( fieldsToRename, {
 		...copy,
 		name: newName,
 	} );

@@ -78,22 +78,20 @@ function getControllerBlockAttrs( attributes = {} ) {
  * @return {Object} Updated block attributes.
  */
 function getControlledBlockAttrs( attributes = {} ) {
-	let { id, name, match } = attributes;
+	let { id, name: blockName, match } = attributes;
 	if ( id && ! match ) {
 		match = id;
 		id = `${ id }_confirm`;
-		name = `${ name }_confirm`;
+		blockName = `${ blockName }_confirm`;
 	}
 
 	return {
 		...attributes,
 		id,
-		name,
+		blockName,
 		match,
-		label: attributes.label
-			? // Translators: %s label of the controller field.
-			  sprintf( __( 'Confirm %s', 'lifterlms' ), attributes.label )
-			: '',
+		// Translators: %s label of the controller field.
+		label: attributes.label ? sprintf( __( 'Confirm %s', 'lifterlms' ), attributes.label ) : '',
 		columns: 6,
 		last_column: true,
 		data_store: false,
@@ -119,15 +117,14 @@ function revertToSingle( clientId ) {
 		block = getBlock( clientId ),
 		{ innerBlocks } = block,
 		{ llms_visibility } = block.attributes,
-		{ name, attributes } = innerBlocks[
-			findControllerBlockIndex( innerBlocks )
-		];
+		{ name: blockName, attributes } =
+			innerBlocks[ findControllerBlockIndex( innerBlocks ) ];
 
 	doFieldUnload( attributes.name );
 
 	replaceBlock(
 		clientId,
-		createBlock( name, {
+		createBlock( blockName, {
 			...attributes,
 			columns: 12,
 			last_column: true,
@@ -148,12 +145,12 @@ function revertToSingle( clientId ) {
  *
  * @since 2.0.0
  *
- * @param {string} name Field name attribute.
+ * @param {string} blockName Field name attribute.
  * @return {void}
  */
-function doFieldUnload( name ) {
+function doFieldUnload( blockName ) {
 	const { unloadField } = dispatch( fieldsStore );
-	unloadField( name );
+	unloadField( blockName );
 }
 
 /**
@@ -187,7 +184,7 @@ const transforms = {
  * The second child should be a simple text block with the type of the first block
  * (eg: user-email to text with a field type email).
  *
- * Therefore each transform is identical except for the block type of the first child
+ * Therefor each transform is identical except for the block type of the first child
  * block.
  *
  * @since 2.0.0
@@ -238,19 +235,19 @@ allowed.forEach( ( blockName ) => {
 				{ innerBlocks } = getSelectedBlock(),
 				controllerBlock =
 					innerBlocks[ findControllerBlockIndex( innerBlocks ) ],
-				{ name } = controllerBlock || {};
+				{ controllerBlockName } = controllerBlock || {};
 
-			return name === blockName;
+			return controllerBlockName === blockName;
 		},
 		transform: ( groupAttributes, innerBlocks ) => {
 			const { llms_visibility } = groupAttributes,
 				controllerBlock =
 					innerBlocks[ findControllerBlockIndex( innerBlocks ) ],
-				{ name, attributes } = controllerBlock;
+				{ controllerBlockName, attributes } = controllerBlock;
 
 			doFieldUnload( attributes.name );
 
-			return createBlock( name, {
+			return createBlock( controllerBlockName, {
 				...attributes,
 				columns: 12,
 				last_column: true,

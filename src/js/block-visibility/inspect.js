@@ -63,9 +63,7 @@ export default createHigherOrderComponent( ( BlockEdit ) => {
 		 * @return {Object} Options object.
 		 */
 		const getVisibilityInOptions = () => {
-			const currentPost = wp.data
-				.select( 'core/editor' )
-				.getCurrentPost();
+			const currentPost = wp.data.select( 'core/editor' ).getCurrentPost();
 
 			const options = [];
 
@@ -179,11 +177,7 @@ export default createHigherOrderComponent( ( BlockEdit ) => {
 		 * @return {void}
 		 */
 		const addPost = ( add ) => {
-			if (
-				! llms_visibility_posts
-					.map( ( { id } ) => id )
-					.includes( add.id )
-			) {
+			if ( ! llms_visibility_posts.map( ( { id } ) => id ).includes( add.id ) ) {
 				llms_visibility_posts.push( add );
 			}
 			savePosts();
@@ -249,9 +243,7 @@ export default createHigherOrderComponent( ( BlockEdit ) => {
 					<BlockEdit { ...props } />
 				</Preview>
 				<InspectorControls>
-					<PanelBody
-						title={ __( 'Enrollment Visibility', 'lifterlms' ) }
-					>
+					<PanelBody title={ __( 'Enrollment Visibility', 'lifterlms' ) }>
 						<SelectControl
 							className="llms-visibility-select"
 							label={ __( 'Display to', 'lifterlms' ) }
@@ -288,18 +280,14 @@ export default createHigherOrderComponent( ( BlockEdit ) => {
 										<SearchPost
 											isMulti
 											postType="course"
-											label={ __(
-												'Courses',
-												'lifterlms'
-											) }
+											label={ __( 'Courses', 'lifterlms' ) }
 											placeholder={ __(
 												'Search by course title…',
 												'lifterlms'
 											) }
 											onChange={ onChange }
 											selected={ llms_visibility_posts.filter(
-												( post ) =>
-													'course' === post.type
+												( post ) => 'course' === post.type
 											) }
 										/>
 										<SearchPost

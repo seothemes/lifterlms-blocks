@@ -67,10 +67,7 @@ export const settings = getSettingsFromBase( baseSettings, {
 		from: [
 			{
 				type: 'block',
-				blocks: [
-					'llms/form-field-checkboxes',
-					'llms/form-field-radio',
-				],
+				blocks: [ 'llms/form-field-checkboxes', 'llms/form-field-radio' ],
 				transform: ( attributes ) =>
 					createBlock( name, {
 						...attributes,

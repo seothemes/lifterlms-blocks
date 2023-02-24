@@ -49,10 +49,7 @@ export default class Preview extends Component {
 					<span className="llms-block-visibility--msg">
 						{ sprintf(
 							// Translators: %s = visibility setting label.
-							__(
-								'This block is only visible to %s',
-								'lifterlms'
-							),
+							__( 'This block is only visible to %s', 'lifterlms' ),
 							getSetting( llms_visibility )
 						) }
 					</span>

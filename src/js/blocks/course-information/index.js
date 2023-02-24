@@ -126,9 +126,7 @@ export const settings = {
 					<RichText
 						tagName={ title_size }
 						value={ title }
-						onChange={ ( value ) =>
-							setAttributes( { title: value } )
-						}
+						onChange={ ( value ) => setAttributes( { title: value } ) }
 					/>
 					{ hasContent && (
 						<Fragment>
@@ -136,10 +134,7 @@ export const settings = {
 								{ show_length && length && (
 									<li>
 										<strong>
-											{ __(
-												'Estimated Time',
-												'lifterlms'
-											) }
+											{ __( 'Estimated Time', 'lifterlms' ) }
 										</strong>
 										: { length }
 									</li>

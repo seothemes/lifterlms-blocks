@@ -15,10 +15,7 @@ export const visibilityOptions = applyFilters(
 		{
 			value: 'catalog_search',
 			label: __( 'Visible', 'lifterlms' ),
-			info: __(
-				'Visible in the catalog and search results.',
-				'lifterlms'
-			),
+			info: __( 'Visible in the catalog and search results.', 'lifterlms' ),
 		},
 		{
 			value: 'catalog',

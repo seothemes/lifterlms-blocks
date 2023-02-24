@@ -125,16 +125,14 @@ export function EditField( props ) {
 		{ fillEditAfter, fillInspectorControls } = block,
 		{ getSelectedBlockClientId } = select( blockEditorStore ),
 		{ isDuplicate } = select( fieldsStore ),
-		inFieldGroup = context[ 'llms/fieldGroup/fieldLayout' ] ? true : false,
-		addingField =
-			attributes.name && isDuplicate( attributes.name, clientId ),
+		inFieldGroup = !! context[ 'llms/fieldGroup/fieldLayout' ],
+		addingField = attributes.name && isDuplicate( attributes.name, clientId ),
 		/**
 		 * Prevent confirmation fields from being copied/pasted into the editor out of their intended context.
 		 *
 		 * @see {@link https://github.com/gocodebox/lifterlms-blocks/issues/106}
 		 */
-		isConfirmWhichHasBeenCopied =
-			! inFieldGroup && attributes.isConfirmationField;
+		isConfirmWhichHasBeenCopied = ! inFieldGroup && attributes.isConfirmationField;
 
 	if ( isConfirmWhichHasBeenCopied ) {
 		shouldSetupAtts = false;
@@ -208,11 +206,7 @@ export function EditField( props ) {
 				<Fill
 					name={ `llmsInspectorControlsFill.${ inspectorSupports.customFill }.${ clientId }` }
 				>
-					{ fillInspectorControls(
-						attributes,
-						setAttributes,
-						props
-					) }
+					{ fillInspectorControls( attributes, setAttributes, props ) }
 				</Fill>
 			) }
 
@@ -243,13 +237,11 @@ export function EditGroup( props ) {
 		blockType = getBlockType( name ),
 		{ allowed, template, lock } = blockType.llmsInnerBlocks,
 		primaryBlock =
-			block &&
-			block.innerBlocks.length &&
-			'llms/form-field-confirm-group' === block.name
-				? block.innerBlocks[
-						blockType.findControllerBlockIndex( block.innerBlocks )
-				  ]
-				: null,
+	block &&
+	block.innerBlocks.length &&
+	'llms/form-field-confirm-group' === block.name
+		? block.innerBlocks[ blockType.findControllerBlockIndex( block.innerBlocks ) ]
+		: null,
 		primaryBlockType = primaryBlock
 			? getBlockType( primaryBlock.name )
 			: null,
@@ -258,8 +250,8 @@ export function EditGroup( props ) {
 			: { after: false },
 		inspectorSupports = blockType.supports.llms_field_inspector,
 		hasLayout =
-			blockType.providesContext &&
-			blockType.providesContext[ 'llms/fieldGroup/fieldLayout' ];
+	blockType.providesContext &&
+	blockType.providesContext[ 'llms/fieldGroup/fieldLayout' ];
 
 	let orientation = 'columns' === fieldLayout ? 'horizontal' : 'vertical';
 	if ( ! hasLayout ) {
@@ -279,7 +271,8 @@ export function EditGroup( props ) {
 							attributes,
 							setAttributes,
 							props
-						) }
+						)
+					}
 				</PanelBody>
 			</InspectorControls>
 
@@ -292,11 +285,11 @@ export function EditGroup( props ) {
 					template={
 						'function' === typeof template
 							? template( {
-									attributes,
-									clientId,
-									block,
-									blockType,
-							  } )
+								attributes,
+								clientId,
+								block,
+								blockType,
+							} )
 							: template
 					}
 					templateLock={ lock }

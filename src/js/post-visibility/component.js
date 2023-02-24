@@ -38,9 +38,7 @@ class PostVisibility extends Component {
 
 		return (
 			<PluginPostStatusInfo className="llms-post-visibility">
-				<span>
-					{ __( 'Catalog & Search Visibility', 'lifterlms' ) }
-				</span>
+				<span>{ __( 'Catalog & Search Visibility', 'lifterlms' ) }</span>
 				<div>
 					<Dropdown
 						className="llms-post-visibility-dropdown"
@@ -110,9 +108,8 @@ class PostVisibility extends Component {
 
 export default compose( [
 	withSelect( ( select ) => {
-		const { getCurrentPostType, getEditedPostAttribute } = select(
-			'core/editor'
-		);
+		const { getCurrentPostType, getEditedPostAttribute } =
+			select( 'core/editor' );
 
 		return {
 			postType: getCurrentPostType(),
@@ -129,8 +126,7 @@ export default compose( [
 		};
 	} ),
 	ifCondition(
-		( { postType } ) =>
-			-1 !== [ 'course', 'llms_membership' ].indexOf( postType )
+		( { postType } ) => -1 !== [ 'course', 'llms_membership' ].indexOf( postType )
 	),
 	withInstanceId,
 ] )( PostVisibility );

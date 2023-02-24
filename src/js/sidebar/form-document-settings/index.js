@@ -53,19 +53,12 @@ class FormDocumentSettings extends Component {
 		// This slot doesn't exist until WordPress 5.3.
 		if ( 'undefined' === typeof PluginDocumentSettingPanel ) {
 			return null;
-		} else if (
-			'llms_form' !== select( editorStore ).getCurrentPostType()
-		) {
+		} else if ( 'llms_form' !== select( editorStore ).getCurrentPostType() ) {
 			return null;
 		}
 
-		const {
-			location,
-			link,
-			showTitle,
-			freeApTitle,
-			setFormMetas,
-		} = this.props;
+		const { location, link, showTitle, freeApTitle, setFormMetas } =
+			this.props;
 		const { formLocations } = window.llms,
 			currentLoc = formLocations[ location ];
 
@@ -105,12 +98,9 @@ class FormDocumentSettings extends Component {
 		function revertToDefault() {
 			const id = 'llms-form-restore-default',
 				// Save temp content for reverting in the notice action.
-				tempContent = select( editorStore ).getEditedPostAttribute(
-					'content'
-				),
-				{ createSuccessNotice, removeNotice } = dispatch(
-					noticesStore
-				),
+				tempContent =
+					select( editorStore ).getEditedPostAttribute( 'content' ),
+				{ createSuccessNotice, removeNotice } = dispatch( noticesStore ),
 				{ resetFields } = dispatch( fieldsStore );
 
 			// Reset field data.
@@ -188,13 +178,13 @@ class FormDocumentSettings extends Component {
 									help={
 										'yes' === showTitle
 											? __(
-													'Displaying form title.',
-													'lifterlms'
-											  )
+												'Displaying form title.',
+												'lifterlms'
+											)
 											: __(
-													'Not displaying form title.',
-													'lifterlms'
-											  )
+												'Not displaying form title.',
+												'lifterlms'
+											)
 									}
 									onChange={ ( val ) =>
 										setFormMetas( {
@@ -206,33 +196,31 @@ class FormDocumentSettings extends Component {
 								/>
 								{ 'checkout' === location &&
 									'yes' === showTitle && (
-										<TextControl
-											label={ __(
-												'Free Access Plan Form Title',
-												'lifterlms'
-											) }
-											value={ freeApTitle }
-											onChange={ ( val ) =>
-												setFormMetas( {
-													_llms_form_title_free_access_plans: val,
-												} )
-											}
-											help={ __(
-												'The form title to be shown for free access plans.',
-												'lifterlms'
-											) }
-										/>
-									) }
+									<TextControl
+										label={ __(
+											'Free Access Plan Form Title',
+											'lifterlms'
+										) }
+										value={ freeApTitle }
+										onChange={ ( val ) =>
+											setFormMetas( {
+												_llms_form_title_free_access_plans:
+														val,
+											} )
+										}
+										help={ __(
+											'The form title to be shown for free access plans.',
+											'lifterlms'
+										) }
+									/>
+								) }
 								<br />
 								<PanelRow>
 									<Button
 										isDestructive
 										onClick={ revertToDefault }
 									>
-										{ __(
-											'Revert to Default',
-											'lifterlms'
-										) }
+										{ __( 'Revert to Default', 'lifterlms' ) }
 									</Button>
 								</PanelRow>
 								<p style={ { marginTop: '5px' } }>
@@ -262,12 +250,9 @@ class FormDocumentSettings extends Component {
  * @since 2.0.0 Don't load default template from metadata.
  * @since 2.3.2 Retrieve form title for free access plans meta field.
  */
-const applyWithSelect = withSelect( ( select ) => {
-	const {
-		getCurrentPost,
-		getCurrentPostType,
-		getEditedPostAttribute,
-	} = select( editorStore );
+const applyWithSelect = withSelect( ( selectMeta ) => {
+	const { getCurrentPost, getCurrentPostType, getEditedPostAttribute } =
+		selectMeta( editorStore );
 
 	if ( 'llms_form' !== getCurrentPostType() ) {
 		return {};
@@ -288,8 +273,9 @@ const applyWithSelect = withSelect( ( select ) => {
  *
  * @since 1.6.0
  */
-const applyWithDispatch = withDispatch( ( dispatch ) => {
-	const { editPost } = dispatch( 'core/editor' );
+const applyWithDispatch = withDispatch( ( dispatchFunction ) => {
+	const { editPost } = dispatchFunction( 'core/editor' );
+
 	return {
 		setFormMetas( metas ) {
 			editPost( { meta: metas } );

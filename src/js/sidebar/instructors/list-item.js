@@ -27,7 +27,7 @@ import { SortableDragHandle } from '../../components';
  * @param {Object} props Component properties object.
  * @return {Object} Component fragment.
  */
-export default function ( props ) {
+export default function( props ) {
 	const {
 			id,
 			item: instructor,
@@ -37,10 +37,8 @@ export default function ( props ) {
 			manageState,
 		} = props,
 		{ visibility, name, label } = instructor,
-		{
-			updateItem: updateInstructor,
-			deleteItem: removeInstructor,
-		} = manageState,
+		{ updateItem: updateInstructor, deleteItem: removeInstructor } =
+			manageState,
 		visible = 'visible' === visibility,
 		isPrimary = 0 === index,
 		[ isEditing, setIsEditing ] = useState( false );
@@ -54,9 +52,7 @@ export default function ( props ) {
 				</section>
 				<aside>
 					{ isPrimary && (
-						<Tooltip
-							text={ __( 'Primary Instructor', 'lifterlms' ) }
-						>
+						<Tooltip text={ __( 'Primary Instructor', 'lifterlms' ) }>
 							<Dashicon icon="star-filled" />
 						</Tooltip>
 					) }
@@ -81,13 +77,13 @@ export default function ( props ) {
 						help={
 							visible
 								? __(
-										'Instructor is visible on frontend',
-										'lifterlms'
-								  )
+									'Instructor is visible on frontend',
+									'lifterlms'
+								)
 								: __(
-										'Instructor is hidden on frontend',
-										'lifterlms'
-								  )
+									'Instructor is hidden on frontend',
+									'lifterlms'
+								)
 						}
 						checked={ visible }
 						onChange={ ( val ) =>
@@ -100,8 +96,8 @@ export default function ( props ) {
 						<TextControl
 							label={ __( 'Label', 'lifterlms' ) }
 							value={ label }
-							onChange={ ( label ) =>
-								updateInstructor( id, { label } )
+							onChange={ ( newLabel ) =>
+								updateInstructor( id, { newLabel } )
 							}
 						/>
 					) }

@@ -134,10 +134,7 @@ function RenderTableData(
  * @param {string} options.data_store_key Field usermeta key.
  * @return {boolean} Returns `true` if the field matches the query, otherwise `false`.
  */
-function matchesSearchQuery(
-	searchQuery,
-	{ label, name, id, data_store_key }
-) {
+function matchesSearchQuery( searchQuery, { label, name, id, data_store_key } ) {
 	const fieldsToSearch = [ label, name, id, data_store_key ],
 		searchQueryLower = searchQuery.toLowerCase();
 
@@ -151,16 +148,16 @@ function matchesSearchQuery(
  *
  * @since [version
  *
- * @param {Object} options
- * @param {Function} options.closeModal Function to close the containing modal.
- * @param {boolean} options.isActive    Whether or not the format is active by user selection/cursor location.
- * @param {Function} options.onChange   Change function for the current rich text editor.
- * @param {string} options.searchQuery  User submitted search query.
- * @param {Object} options.value        Rich text value object.
- * @param {string} options.defaultValue User submitted default value.
+ * @param {Object}   options
+ * @param {Function} options.closeModal   Function to close the containing modal.
+ * @param {boolean}  options.isActive     Whether or not the format is active by user selection/cursor location.
+ * @param {Function} options.onChange     Change function for the current rich text editor.
+ * @param {string}   options.searchQuery  User submitted search query.
+ * @param {Object}   options.value        Rich text value object.
+ * @param {string}   options.defaultValue User submitted default value.
  * @return {Object} Component fragment.
  */
-export default function ( {
+export default function( {
 	closeModal,
 	isActive,
 	onChange,
@@ -199,9 +196,7 @@ export default function ( {
 	const exclude = applyFilters( 'llms/userInfoShortcodes/exclude', [
 		'password',
 	] );
-	userInfoFields = userInfoFields.filter(
-		( { id } ) => ! exclude.includes( id )
-	);
+	userInfoFields = userInfoFields.filter( ( { id } ) => ! exclude.includes( id ) );
 
 	return (
 		<>

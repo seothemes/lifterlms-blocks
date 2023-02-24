@@ -54,13 +54,8 @@ function SortableListItem( {
 	manageState,
 	extraProps = {},
 } ) {
-	const {
-			attributes,
-			listeners,
-			setNodeRef,
-			transform,
-			transition,
-		} = useSortable( { id } ),
+	const { attributes, listeners, setNodeRef, transform, transition } =
+			useSortable( { id } ),
 		style = {
 			transform: CSS.Transform.toString( transform ),
 			transition,
@@ -115,7 +110,7 @@ function SortableListItem( {
  * @param {Object}   props.extraProps       Extra properties passed on to ListItem.
  * @return {DndContext} Drag and drop context component.
  */
-export default function ( {
+export default function( {
 	ListItem,
 	manageState,
 	items = [],

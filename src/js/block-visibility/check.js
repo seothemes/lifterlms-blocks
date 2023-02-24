@@ -74,10 +74,5 @@ export default function supportsVisibility( settings, name ) {
 	 * @param {Object}  settings Block settings object.
 	 * @param {string}  name     Block name, eg "core/paragraph".
 	 */
-	return applyFilters(
-		'llms_block_supports_visibility',
-		ret,
-		settings,
-		name
-	);
+	return applyFilters( 'llms_block_supports_visibility', ret, settings, name );
 }

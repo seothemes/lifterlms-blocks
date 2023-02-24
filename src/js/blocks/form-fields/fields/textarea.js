@@ -51,8 +51,11 @@ const fillInspectorControls = ( attributes, setAttributes ) => {
 			) }
 			value={ rows }
 			type="number"
-			onChange={ ( rows ) =>
-				setAttributes( { html_attrs: { ...html_attrs, rows } } )
+			onChange={ ( value ) =>
+				setAttributes( { html_attrs: {
+					...html_attrs,
+					rows: value,
+				} } )
 			}
 			min="2"
 			step="1"

@@ -150,14 +150,14 @@ variations.forEach( ( variation ) => {
  *
  * @since 2.0.0
  *
- * @param {Object} attributes Block attributes.
+ * @param {Object}   attributes    Block attributes.
  * @param {Function} setAttributes Reference to the block's setAttributes() function.
  * @return {Fragment} Component HTML Fragment.
  */
 const fillInspectorControls = ( attributes, setAttributes ) => {
 	// We only add extra controls to the number variation.
 	if ( attributes.isConfirmationField || 'number' !== attributes.field ) {
-		return;
+		return <></>;
 	}
 
 	// Add min/max options to a number field.
@@ -174,8 +174,11 @@ const fillInspectorControls = ( attributes, setAttributes ) => {
 				) }
 				value={ min }
 				type="number"
-				onChange={ ( min ) =>
-					setAttributes( { html_attrs: { ...html_attrs, min } } )
+				onChange={ ( minValue ) =>
+					setAttributes( { html_attrs: {
+						...html_attrs,
+						min: minValue,
+					} } )
 				}
 			/>
 
@@ -187,8 +190,11 @@ const fillInspectorControls = ( attributes, setAttributes ) => {
 				) }
 				value={ max }
 				type="number"
-				onChange={ ( max ) =>
-					setAttributes( { html_attrs: { ...html_attrs, max } } )
+				onChange={ ( maxValue ) =>
+					setAttributes( { html_attrs: {
+						...html_attrs,
+						max: maxValue,
+					} } )
 				}
 			/>
 		</Fragment>

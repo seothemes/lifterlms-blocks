@@ -49,8 +49,7 @@ export function getField( { fields }, name ) {
  * @return {?Object} Field object or `null` if not found.
  */
 export function getFieldBy( state, queryTerm, queryKey, context = 'global' ) {
-	const fields =
-		'global' === context ? state.fields : getLoadedFields( state );
+	const fields = 'global' === context ? state.fields : getLoadedFields( state );
 	return (
 		fieldsObjectToArray( fields ).find(
 			( field ) => field[ queryKey ] === queryTerm

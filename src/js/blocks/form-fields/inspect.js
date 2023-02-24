@@ -275,10 +275,7 @@ export default class Inspector extends Component {
 
 				default:
 					// Translators: %s = user-submitted value.
-					msg = __(
-						'The chosen value "%s" is invalid.',
-						'lifterlms'
-					);
+					msg = __( 'The chosen value "%s" is invalid.', 'lifterlms' );
 			}
 		}
 
@@ -481,52 +478,49 @@ export default class Inspector extends Component {
 					<PanelBody>
 						{ ! isConfirmationField &&
 							this.hasInspectorControlSupport( 'required' ) && (
-								<ToggleControl
-									className="llms-required-field-toggle"
-									label={ __( 'Required', 'lifterlms' ) }
-									checked={ !! required }
-									onChange={ () =>
-										setAttributes( {
-											required: ! required,
-										} )
-									}
-									help={
-										!! required
-											? __(
-													'Field is required.',
-													'lifterlms'
-											  )
-											: __(
-													'Field is optional.',
-													'lifterlms'
-											  )
-									}
-								/>
-							) }
+							<ToggleControl
+								className="llms-required-field-toggle"
+								label={ __( 'Required', 'lifterlms' ) }
+								checked={ !! required }
+								onChange={ () =>
+									setAttributes( {
+										required: ! required,
+									} )
+								}
+								help={
+									!! required
+										? __(
+											'Field is required.',
+											'lifterlms'
+										)
+										: __(
+											'Field is optional.',
+											'lifterlms'
+										)
+								}
+							/>
+						) }
 
 						<SelectControl
 							className="llms-field-width-select"
 							label={ __( 'Field Width', 'lifterlms' ) }
-							onChange={ ( columns ) => {
-								columns = parseInt( columns, 10 );
-								setAttributes( { columns } );
+							onChange={ ( value ) => {
+								value = parseInt( value, 10 );
+								setAttributes( {
+									columns: value,
+								} );
 
 								const sibling = this.getBlockSiblings( block );
 
 								if (
 									sibling.length &&
-									columns + sibling[ 0 ].attributes.columns >
-										12
+									value + sibling[ 0 ].attributes.columns > 12
 								) {
-									const { updateBlockAttributes } = dispatch(
-										blockEditorStore
-									);
-									updateBlockAttributes(
-										sibling[ 0 ].clientId,
-										{
-											columns: 12 - columns,
-										}
-									);
+									const { updateBlockAttributes } =
+										dispatch( blockEditorStore );
+									updateBlockAttributes( sibling[ 0 ].clientId, {
+										columns: 12 - value,
+									} );
 								}
 							} }
 							help={ __(
@@ -548,8 +542,10 @@ export default class Inspector extends Component {
 							<TextControl
 								label={ __( 'Placeholder', 'lifterlms' ) }
 								value={ placeholder }
-								onChange={ ( placeholder ) =>
-									setAttributes( { placeholder } )
+								onChange={ ( value ) =>
+									setAttributes( {
+										placeholder: value,
+									} )
 								}
 								help={ __(
 									'Displays a placeholder option as the selected instead of a default value.',
@@ -559,42 +555,31 @@ export default class Inspector extends Component {
 						) }
 
 						{ ( canTransformToGroup ||
-							( isConfirmationControlField &&
-								isInAConfirmGroup ) ) && (
+							( isConfirmationControlField && isInAConfirmGroup ) ) && (
 							<ToggleControl
 								className="llms-confirmation-field-toggle"
-								label={ __(
-									'Confirmation Field',
-									'lifterlms'
-								) }
+								label={ __( 'Confirmation Field', 'lifterlms' ) }
 								checked={ isInAConfirmGroup }
 								onChange={ () => {
-									const {
-											replaceBlock,
-											selectBlock,
-										} = dispatch( blockEditorStore ),
-										{
-											findControllerBlockIndex,
-										} = getBlockType(
-											'llms/form-field-confirm-group'
-										),
-										{ getBlock } = select(
-											blockEditorStore
-										);
+									const { replaceBlock, selectBlock } =
+												dispatch( blockEditorStore ),
+										{ findControllerBlockIndex } =
+												getBlockType(
+													'llms/form-field-confirm-group'
+												),
+										{ getBlock } = select( blockEditorStore );
 
 									let replaceClientId = clientId,
 										newBlockType =
-											'llms/form-field-confirm-group',
+												'llms/form-field-confirm-group',
 										blockToSwitch = block,
 										selectBlockId = null;
 
 									if ( isInAConfirmGroup ) {
-										replaceClientId = this.getParentGroupClientId(
-											block
-										);
-										blockToSwitch = getBlock(
-											replaceClientId
-										);
+										replaceClientId =
+												this.getParentGroupClientId( block );
+										blockToSwitch =
+												getBlock( replaceClientId );
 										newBlockType = block.name;
 									}
 
@@ -607,13 +592,14 @@ export default class Inspector extends Component {
 
 									if ( ! isInAConfirmGroup ) {
 										const { innerBlocks } = switched[ 0 ],
-											controllerIndex = findControllerBlockIndex(
-												innerBlocks
-											);
+											controllerIndex =
+													findControllerBlockIndex(
+														innerBlocks
+													);
 
 										selectBlockId =
-											innerBlocks[ controllerIndex ]
-												.clientId;
+												innerBlocks[ controllerIndex ]
+													.clientId;
 									} else {
 										selectBlockId = switched[ 0 ].clientId;
 									}
@@ -623,16 +609,17 @@ export default class Inspector extends Component {
 								help={
 									isInAConfirmGroup
 										? __(
-												'A Confirmation field is active.',
-												'lifterlms'
-										  )
+											'A Confirmation field is active.',
+											'lifterlms'
+										)
 										: __(
-												'No confirmation field.',
-												'lifterlms'
-										  )
+											'No confirmation field.',
+											'lifterlms'
+										)
 								}
 							/>
-						) }
+						)
+						}
 
 						{ this.hasInspectorControlSupport( 'customFill' ) && (
 							<Slot
@@ -645,48 +632,46 @@ export default class Inspector extends Component {
 
 					{ ! isConfirmationField &&
 						this.hasInspectorControlSupport( 'storage' ) && (
-							<PanelBody
-								title={ __( 'Data Storage', 'lifterlms' ) }
-							>
-								<this.ValidatedTextControl
-									parent={ this }
-									attrKey="data_store_key"
-									label={ __( 'Usermeta Key', 'lifterlms' ) }
-									help={ __(
-										'Database field key name. Only accepts alphanumeric characters, hyphens, and underscores.',
-										'lifterlms'
-									) }
-								/>
-							</PanelBody>
-						) }
+						<PanelBody title={ __( 'Data Storage', 'lifterlms' ) }>
+							<this.ValidatedTextControl
+								parent={ this }
+								attrKey="data_store_key"
+								label={ __( 'Usermeta Key', 'lifterlms' ) }
+								help={ __(
+									'Database field key name. Only accepts alphanumeric characters, hyphens, and underscores.',
+									'lifterlms'
+								) }
+							/>
+						</PanelBody>
+					) }
 				</InspectorControls>
 
 				<InspectorAdvancedControls>
 					{ ! isConfirmationField &&
 						this.hasInspectorControlSupport( 'name' ) && (
-							<this.ValidatedTextControl
-								parent={ this }
-								attrKey="name"
-								label={ __( 'Field Name', 'lifterlms' ) }
-								help={ __(
-									"The field's HTML name attribute.",
-									'lifterlms'
-								) }
-							/>
-						) }
+						<this.ValidatedTextControl
+							parent={ this }
+							attrKey="name"
+							label={ __( 'Field Name', 'lifterlms' ) }
+							help={ __(
+								"The field's HTML name attribute.",
+								'lifterlms'
+							) }
+						/>
+					) }
 
 					{ ! isConfirmationField &&
 						this.hasInspectorControlSupport( 'id' ) && (
-							<this.ValidatedTextControl
-								parent={ this }
-								attrKey="id"
-								label={ __( 'Field ID', 'lifterlms' ) }
-								help={ __(
-									"The field's HTML id attribute.",
-									'lifterlms'
-								) }
-							/>
-						) }
+						<this.ValidatedTextControl
+							parent={ this }
+							attrKey="id"
+							label={ __( 'Field ID', 'lifterlms' ) }
+							help={ __(
+								"The field's HTML id attribute.",
+								'lifterlms'
+							) }
+						/>
+					) }
 				</InspectorAdvancedControls>
 			</Fragment>
 		);

@@ -95,19 +95,18 @@ const fillEditAfter = ( attributes, setAttributes ) => {
 				style={ { marginTop: 0 } }
 				tagName="p"
 				value={ meter_description }
-				onChange={ ( meter_description ) =>
-					setAttributes( { meter_description } )
+				onChange={ ( meterDescription ) =>
+					setAttributes( {
+						meter_description: meterDescription,
+					} )
 				}
 				allowedFormats={ [ 'core/bold', 'core/italic' ] }
 				aria-label={
 					meter_description
-						? __(
-								'Password strength meter description',
-								'lifterlms'
-						  )
+						? __( 'Password strength meter description', 'lifterlms' )
 						: __(
-								'Empty Password strength meter description; start writing to add a label'
-						  )
+							'Empty Password strength meter description; start writing to add a label'
+						)
 				}
 				placeholder={ __(
 					'Enter a description for the password strength meter',
@@ -124,7 +123,7 @@ const fillEditAfter = ( attributes, setAttributes ) => {
  * @since 2.0.0
  * @since 2.1.0 Update the minlength value of confirmation field when the control field's value changes.
  *
- * @param {Object} attributes Block attributes.
+ * @param {Object}   attributes    Block attributes.
  * @param {Function} setAttributes Reference to the block's setAttributes() function.
  * @return {Fragment} Component HTML Fragment.
  */
@@ -139,7 +138,7 @@ const fillInspectorControls = ( attributes, setAttributes ) => {
 		{ minlength } = html_attrs;
 
 	if ( isConfirmationField ) {
-		return;
+		return <></>;
 	}
 
 	/**
@@ -147,11 +146,12 @@ const fillInspectorControls = ( attributes, setAttributes ) => {
 	 *
 	 * @since 2.1.0
 	 *
-	 * @param {number} minlength New minlength value.
+	 * @param {number} value New minlength value.
 	 * @return {void}
 	 */
-	const setMinLength = ( minlength ) => {
-		setAttributes( mergeHtmlAttrs( html_attrs, minlength ) );
+	const setMinLength = ( value ) => {
+		setAttributes( mergeHtmlAttrs( html_attrs, value ) );
+
 		if ( isConfirmationControlField ) {
 			updateConfirmationFieldMinLength( minlength );
 		}
@@ -163,14 +163,11 @@ const fillInspectorControls = ( attributes, setAttributes ) => {
 				label={ __( 'Password strength meter', 'lifterlms' ) }
 				help={
 					meter
-						? __(
-								'Password strength meter is enabled.',
-								'lifterlms'
-						  )
+						? __( 'Password strength meter is enabled.', 'lifterlms' )
 						: __(
-								'Password strength meter is disabled.',
-								'lifterlms'
-						  )
+							'Password strength meter is disabled.',
+							'lifterlms'
+						)
 				}
 				checked={ meter }
 				onChange={ () => setAttributes( { meter: ! meter } ) }
@@ -180,9 +177,9 @@ const fillInspectorControls = ( attributes, setAttributes ) => {
 				<SelectControl
 					label={ __( 'Minimum Password Strength', 'lifterlms' ) }
 					value={ min_strength }
-					onChange={ ( min_strength ) =>
-						setAttributes( { min_strength } )
-					}
+					onChange={ ( minStrength ) => setAttributes( {
+						min_strength: minStrength,
+					} ) }
 					options={ [
 						{ value: 'strong', label: __( 'Strong', 'lifterlms' ) },
 						{ value: 'medium', label: __( 'Medium', 'lifterlms' ) },

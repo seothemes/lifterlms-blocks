@@ -35,9 +35,8 @@ function getSupportingParents() {
  * @return {Object} WP Block object of the parent.
  */
 export function getParentFieldGroup( clientId ) {
-	const { getBlock, getBlockParentsByBlockName } = select(
-		'core/block-editor'
-	);
+	const { getBlock, getBlockParentsByBlockName } =
+		select( 'core/block-editor' );
 	return getBlock(
 		getBlockParentsByBlockName(
 			clientId,
@@ -130,7 +129,7 @@ function getConfirmGroupUpdates( attributes, siblingAttributes ) {
 	};
 }
 
-export default function ( { attributes, clientId, setAttributes } = {} ) {
+export default function( { attributes, clientId, setAttributes } = {} ) {
 	const sibling = getSibling( clientId );
 
 	let currentUpdates = {},

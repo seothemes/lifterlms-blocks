@@ -86,10 +86,7 @@ export default class Search extends Component {
 	 * @return {string} API request path.
 	 */
 	getSearchUrl = ( search ) =>
-		wp.url.addQueryArgs(
-			this.getSearchPath(),
-			this.getSearchArgs( search )
-		);
+		wp.url.addQueryArgs( this.getSearchPath(), this.getSearchArgs( search ) );
 
 	/**
 	 * Generate the label used for an individual search result item.
@@ -141,11 +138,9 @@ export default class Search extends Component {
 	 * @return {Promise} API response promise.
 	 */
 	onSearch = debounce( 300, ( search, callback ) => {
-		wp.apiFetch( { path: this.getSearchUrl( search ) } ).then(
-			( results ) => {
-				callback( this.formatSearchResults( results ) );
-			}
-		);
+		wp.apiFetch( { path: this.getSearchUrl( search ) } ).then( ( results ) => {
+			callback( this.formatSearchResults( results ) );
+		} );
 	} );
 
 	/**
@@ -157,14 +152,8 @@ export default class Search extends Component {
 	 * @return {BaseControl} Component HTML fragment.
 	 */
 	render() {
-		const {
-				label,
-				isMulti,
-				isDisabled,
-				onChange,
-				placeholder,
-				selected,
-			} = this.props,
+		const { label, isMulti, isDisabled, onChange, placeholder, selected } =
+				this.props,
 			className = this.props.className || this.getDefaultClassName();
 
 		return (
